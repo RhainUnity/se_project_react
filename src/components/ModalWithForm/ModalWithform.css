@@ -10,6 +10,9 @@
   align-items: center;
   visibility: hidden;
   font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .modal_opened {
@@ -27,6 +30,9 @@
 
 .modal__title {
   margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .modal__close-btn {
@@ -47,6 +53,11 @@
 
 .modal__input {
   display: block;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  width: 100%;
+  background-color: transparent;
 }
 
 .modal__radio-btns {
@@ -61,10 +72,6 @@
 }
 
 .modal__submit {
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 16px;
-  line-height: 20px;
   letter-spacing: 0%;
 }
 
