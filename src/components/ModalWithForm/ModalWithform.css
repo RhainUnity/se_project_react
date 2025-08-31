@@ -61,6 +61,11 @@
 }
 
 .modal__submit {
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
 }
 
 .modal__submit:hover {
