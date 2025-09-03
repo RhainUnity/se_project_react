@@ -1,0 +1,14 @@
+.modal__content_type_image {
+  border-radius: 16px;
+  height: 610px;
+  width: 498px;
+  padding: 0;
+}
+
+.modal__image {
+  max-height: 70vh;
+  max-width: 100%;
+  border-radius: 16px 16px 0 0;
+  margin: 0 auto;
+  padding: 0;
+}

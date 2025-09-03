@@ -61,10 +61,6 @@ export const weatherOptions = [
   },
 ];
 
-export const closeBtn = {
-  url: new URL("../assets/close-btn.svg", import.meta.url).href,
-};
-
 // The utils files contain default clothing items
 const defaultClothingItems = [
   {
