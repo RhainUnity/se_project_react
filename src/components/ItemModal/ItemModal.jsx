@@ -1,5 +1,5 @@
 import "./ItemModal.css";
-import { closeBtn } from "../../utils/constants";
+import { closeBtn } from "../../utils/constants.js";
 
 function ItemModal({ activeModal, closeModal, card }) {
   return (
