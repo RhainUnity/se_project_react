@@ -5,7 +5,7 @@ import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer.jsx";
-import ModalWithForm from "../ModalWithForm/ModalwithForm";
+import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, APIkey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
