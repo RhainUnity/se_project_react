@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-////////////// import reactLogo from './assets/react.svg'
-////////////// import viteLogo from '/vite.svg'
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer.jsx";
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
+import ModalWithForm from "../ModalWithForm/ModalwithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal";
 import { coordinates, APIkey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
