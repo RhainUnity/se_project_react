@@ -9,6 +9,10 @@
   justify-content: center;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .card__image {
   width: 323px;
   height: 326px;

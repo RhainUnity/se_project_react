@@ -18,11 +18,11 @@ function WeatherCard({ weatherData }) {
   return (
     <section className="weather-card">
       <p className="weather-card__temp">
-        {weatherData.temperature} &deg; F
+        {weatherData.temperature}&deg; F
         {/* /{" "}
-        {weatherData.isDay ? "DAY" : "NIGHT"}*/}
+        {weatherData.isDay ? "DAY" : "NIGHT"}
         {" / "}
-        {weatherData.condition && `${weatherData.condition.toUpperCase()}`}
+        {weatherData.condition && `${weatherData.condition.toUpperCase()}`}*/}
       </p>
       <img
         src={currentWeatherCard}

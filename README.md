@@ -1,8 +1,15 @@
-# React + Vite
+# SE_PROJECT_REACT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app recomcends clothing suitable to varying weather conditions.
+
+Vite and React were used to bundle and optomize the code.
+The HTML markup was destructured into components with jsx and JavaScript and styled with CSS.
+Components' state was managed with hooks, such as 'useState' and 'useEffect'.
+In JS, I implemented: arrow functions, destructuring, array methods(like map() and filter()),
 
 Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+    - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+Github Page:

@@ -27,6 +27,10 @@
   margin: 0;
 }
 
+.header__avatar:hover {
+  cursor: pointer;
+}
+
 .header__add-clothes-btn {
   margin: 0 20px 0 auto;
   border: 0;

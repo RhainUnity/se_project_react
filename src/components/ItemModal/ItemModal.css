@@ -12,3 +12,17 @@
   margin: 0 auto;
   padding: 0;
 }
+
+.modal__caption {
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding: 20px 0 12px 32px;
+}
+
+.modal__weather {
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0 0 32px 32px;
+}
