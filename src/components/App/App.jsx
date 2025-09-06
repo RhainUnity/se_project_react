@@ -15,7 +15,7 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "hot",
-    temperature: { F: 999, C: 999 }, //////////////////////
+    temperature: 999, //////////////////////
     city: "",
   });
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);

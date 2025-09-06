@@ -18,7 +18,7 @@ function WeatherCard({ weatherData }) {
   return (
     <section className="weather-card">
       <p className="weather-card__temp">
-        {weatherData.temperature}&deg; F
+        {weatherData?.temperature ?? "-"}&deg; F
         {/* /{" "}
         {weatherData.isDay ? "DAY" : "NIGHT"}
         {" / "}
