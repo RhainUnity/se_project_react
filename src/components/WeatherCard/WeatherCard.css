@@ -5,8 +5,8 @@
 }
 
 .weather-card__img {
-  display: block; /* removes baseline gap */
-  max-width: 100%; /* never exceed parent container */
+  display: block;
+  max-width: 100%;
   object-fit: cover;
   object-position: right top;
   border-radius: 12px;

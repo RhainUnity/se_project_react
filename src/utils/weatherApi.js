@@ -18,17 +18,16 @@ export const filterWeatherData = (data) => {
   result.city = data.name;
   result.temperature = data.main.temp;
   result.type = getWeatherCondition(result.temperature);
-  result.condition = data.weather[0].main.toLowerCase(); //  //
-  result.isDay = isDay(data.sys, Date.now()); //  //
+  result.condition = data.weather[0].main.toLowerCase();
+  result.isDay = isDay(data.sys, Date.now());
   return result;
 };
 
 const isDay = ({ sunrise, sunset }, now) => {
-  //  //
-  return sunrise * 1000 < now && now < sunset * 1000; //  //
-}; //  //
+  return sunrise * 1000 < now && now < sunset * 1000;
+};
 
-const getWeatherCondition = (temperature) => {
+atherCondition = (temperature) => {
   if (temperature >= 81) {
     return "hot";
   } else if (temperature > 63 && temperature < 81) {
