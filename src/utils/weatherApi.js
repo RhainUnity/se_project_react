@@ -27,7 +27,7 @@ const isDay = ({ sunrise, sunset }, now) => {
   return sunrise * 1000 < now && now < sunset * 1000;
 };
 
-atherCondition = (temperature) => {
+getWeatherCondition = (temperature) => {
   if (temperature >= 81) {
     return "hot";
   } else if (temperature > 63 && temperature < 81) {
