@@ -16,7 +16,7 @@ function checkRequestResult(res) {
 export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
-  result.temperature = data.main.temp;
+  result.temperature = Math.round(data.main.temp);
   result.type = getWeatherCondition(result.temperature);
   result.condition = data.weather[0].main.toLowerCase();
   result.isDay = isDay(data.sys, Date.now());
