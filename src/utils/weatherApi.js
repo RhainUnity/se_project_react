@@ -14,10 +14,12 @@ function checkRequestResult(res) {
 }
 
 export const filterWeatherData = (data) => {
+  const F = Math.round(data.main.temp);
+  const C = Math.round(((F - 32) * 5) / 9);
   const result = {};
   result.city = data.name;
-  result.temperature = Math.round(data.main.temp);
-  result.type = getWeatherCondition(result.temperature);
+  result.temperature = { F, C };
+  result.type = getWeatherCondition(result.temperature.F);
   result.condition = data.weather[0].main.toLowerCase();
   result.isDay = isDay(data.sys, Date.now());
   return result;
@@ -36,3 +38,12 @@ const getWeatherCondition = (temperature) => {
     return "cold";
   }
 };
+
+// const setTempByUnit = (temp) => {
+//   const currentTempUnit = useContext(CurrentTempUnitContext);
+//   if (currentTempUnit === "F") {
+//     return temp;
+//   } else {
+//     return ((temp - 32) * 5) / 9;
+//   }
+// };
