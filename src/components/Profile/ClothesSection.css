@@ -1,0 +1,24 @@
+.clothes-section__header {
+  display: flex;
+  margin-left: auto;
+}
+
+.clothes-section__add-item_btn {
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 0 0 20px;
+}
+
+.clothes-section__add-item_btn:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 1);
+}
+
+.clothes-section__cards_list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  gap: 20px;
+}
