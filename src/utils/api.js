@@ -16,16 +16,6 @@ function postItems(item) {
   );
 }
 
-// function deleteItems(item) {
-//   return fetch(`${baseUrl}/items/`, {
-//     method: "DELETE",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(item),
-//   }).then((res) =>
-//     res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))
-//   );
-// }
-
 async function deleteItems(id) {
   // id === the _id value
   const res = await fetch(`${baseUrl}/items/${id}`, {

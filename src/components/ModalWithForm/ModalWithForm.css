@@ -94,6 +94,16 @@
 
 .modal__label_type_radio {
   padding-bottom: 8px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__radio-input {
+  accent-color: black;
+}
+
+.modal__label_type_radio:has(.modal__radio-input:checked) {
+  color: #000;
+  font-weight: 700; /* optional */
 }
 
 .modal__radio-input:hover {
@@ -102,7 +112,7 @@
 
 .modal__submit {
   letter-spacing: 0%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 1);
   height: 36px;
   width: 124px;
   border: none;
@@ -112,4 +122,9 @@
 
 .modal__submit:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal__submit:disabled {
+  background-color: rgba(0, 0, 0, 0.3);
 }

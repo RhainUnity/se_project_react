@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import { useForm } from "../../hooks/useForm.js";
 
@@ -8,8 +9,17 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
     imageUrl: "",
   };
   const { values, handleChange, setValues } = useForm(defaultValues);
+
+  const formRef = useRef(null);
+  const [canSubmit, setCanSubmit] = useState(false);
+
+  useEffect(() => {
+    setCanSubmit(formRef.current?.checkValidity() ?? false);
+  }, [values]);
+
   function handlesubmit(e) {
     e.preventDefault();
+    if (!formRef.current?.checkValidity()) return;
     onAddItem(values);
     closeModal();
     setValues({ name: "", weatherType: "", imageUrl: "" });
@@ -23,6 +33,8 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
       onSubmit={handlesubmit}
       buttonText={buttonText}
       isOpen={isOpen}
+      formRef={formRef}
+      submitDisabled={!canSubmit}
     >
       <label htmlFor="name" className="modal__label">
         Name{" "}
@@ -61,6 +73,7 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
             onChange={handleChange}
             value="hot"
             checked={values.weatherType === "hot"}
+            required
           />
           Hot
         </label>

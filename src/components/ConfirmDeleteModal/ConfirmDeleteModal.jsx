@@ -9,7 +9,7 @@ function ConfirmDeleteModal({ activeModal, closeModal, card, deleteCard }) {
         <button className="modal__close-btn" type="button" onClick={closeModal}>
           <img src={closeBtn} alt="CLOSE" className="modal__close-btn-image" />
         </button>
-        <h2 className="modal__deltete-confirmation">
+        <h2 className="modal__delete-confirmation">
           Are you sure you want to delete this item? This action is
           irreversible.
         </h2>
