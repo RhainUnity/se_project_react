@@ -26,3 +26,20 @@
   margin: 0;
   padding: 0 0 32px 32px;
 }
+
+.modal__delete-btn {
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 32px;
+  bottom: 64px;
+  border: none;
+  background: none;
+  color: rgba(255, 77, 0, 1);
+}
+
+.modal__delete-btn:hover {
+  cursor: pointer;
+}

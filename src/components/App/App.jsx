@@ -5,7 +5,6 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile.jsx";
 import Footer from "../Footer/Footer.jsx";
-//import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import AddItemModal from "../AddItemsModal/AddItemModal.jsx";
 import ItemModal from "../ItemModal/ItemModal";
 import {
@@ -15,7 +14,8 @@ import {
 } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext.js";
-import { getItems } from "../../utils/api.js";
+import { getItems, postItems, deleteItems } from "../../utils/api.js";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -41,9 +41,35 @@ function App() {
     setActiveModal("add-garment");
   };
 
-  const handleAddItem = (inputItem) => {
-    setClothingItems([inputItem, ...clothingItems]);
-    closeModal();
+  const handleAddItem = async (inputItems) => {
+    const newItem = {
+      _id: Date.now().toString(),
+      name: inputItems.name,
+      weather: inputItems.weatherType,
+      imageUrl: inputItems.imageUrl,
+    };
+
+    try {
+      const saved = await postItems(newItem);
+      setClothingItems((prev) => [saved, ...prev]);
+      closeModal();
+    } catch (err) {
+      console.error("Failed to save item:", err);
+    }
+  };
+
+  const handleConfirmDelModal = () => {
+    setActiveModal("delete");
+  };
+
+  const handleDeleteItem = async (id) => {
+    try {
+      await deleteItems(id);
+      setClothingItems((prev) => prev.filter((item) => item._id !== id));
+      closeModal();
+    } catch (err) {
+      console.error("Failed to delete item:", err);
+    }
   };
 
   const closeModal = () => {
@@ -76,7 +102,6 @@ function App() {
     if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
 
     const handleEscClose = (e) => {
-      // define the function inside useEffect not to lose the reference on rerendering
       if (e.key === "Escape") {
         closeModal();
       }
@@ -85,7 +110,6 @@ function App() {
     document.addEventListener("keydown", handleEscClose);
 
     return () => {
-      // don't forget to add a clean up function for removing the listener
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]); // watch activeModal here
@@ -116,20 +140,13 @@ function App() {
                   handleCardClick={handleCardClick}
                   weatherData={weatherData}
                   clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
                 />
               }
             />
           </Routes>
           <Footer />
         </div>
-        {/* //////////////////////// */}
-        {/* <ModalWithForm
-          buttonText="Add garment"
-          title="New garment"
-          activeModal={activeModal}
-          closeModal={closeModal}
-          isOpen={activeModal === "add-garment"}
-        ></ModalWithForm> */}
         <AddItemModal
           buttonText="Add garment"
           title="New garment"
@@ -143,6 +160,13 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           closeModal={closeModal}
+          confirmDelete={handleConfirmDelModal}
+        />
+        <ConfirmDeleteModal
+          activeModal={activeModal}
+          card={selectedCard}
+          closeModal={closeModal}
+          deleteCard={handleDeleteItem}
         />
       </CurrentTempUnitContext.Provider>
     </div>

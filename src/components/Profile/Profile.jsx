@@ -6,6 +6,7 @@ export default function Profile({
   handleCardClick,
   weatherData,
   clothingItems = [],
+  handleAddClick,
 }) {
   return (
     <div className="profile">
@@ -17,6 +18,7 @@ export default function Profile({
           handleCardClick={handleCardClick}
           weatherData={weatherData}
           clothingItems={clothingItems}
+          handleAddClick={handleAddClick}
         />
       </section>
     </div>

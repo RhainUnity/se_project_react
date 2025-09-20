@@ -10,16 +10,11 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
   const { values, handleChange, setValues } = useForm(defaultValues);
   function handlesubmit(e) {
     e.preventDefault();
-    onAddItem({
-      id: Date.now().toString(),
-      name: values.name,
-      imageUrl: values.imageUrl,
-      weather: values.weatherType,
-    });
+    onAddItem(values);
     closeModal();
     setValues({ name: "", weatherType: "", imageUrl: "" });
   }
-  //...
+
   return (
     <ModalWithForm
       title="New garment"

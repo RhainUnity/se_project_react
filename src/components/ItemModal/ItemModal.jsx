@@ -1,7 +1,8 @@
 import "./ItemModal.css";
 import closeBtn from "../../assets/close-btn.svg";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
-function ItemModal({ activeModal, closeModal, card }) {
+function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
   if (activeModal !== "preview" || !card) return null;
 
   return (
@@ -15,6 +16,13 @@ function ItemModal({ activeModal, closeModal, card }) {
           <h2 className="modal__caption">{card.name}</h2>
           <p className="modal__weather">Weather: {card.weather}</p>
         </div>
+        <button
+          type="button"
+          className="modal__delete-btn"
+          onClick={confirmDelete}
+        >
+          Delete item
+        </button>
       </div>
     </div>
   );
