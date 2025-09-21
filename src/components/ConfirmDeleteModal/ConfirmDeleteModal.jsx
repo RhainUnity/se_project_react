@@ -15,7 +15,7 @@ function ConfirmDeleteModal({ activeModal, closeModal, card, deleteCard }) {
         </h2>
         <button
           type="button"
-          className="modal__delete-btn"
+          className="modal__final-delete-btn"
           onClick={() => deleteCard(card._id)}
         >
           Yes, delete item

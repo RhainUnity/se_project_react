@@ -13,8 +13,21 @@
   margin: 0 0 16px;
 }
 
-.modal__delete-btn,
+.modal__final-delete-btn,
 .modal__cancel-btn {
-  margin: 0 auto 16px;
-  align-content: center;
+  align-self: center;   /* centers this button in the flex column */
+  margin: 0 0 16px;
+  border: none;
+  background: none;
+  color: rgba(255, 77, 0, 1); 
+  padding: 0;
+  font-size: 20px;
+  line-height: 24px;
+  
 }
+
+.modal__final-delete-btn:hover,
+.modal__cancel-btn:hover {
+  cursor: pointer;
+}
+  
