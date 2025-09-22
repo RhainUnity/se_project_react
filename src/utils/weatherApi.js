@@ -1,6 +1,6 @@
-export const getWeather = ({ latitude, longitude }, APIkey) => {
+export const getWeather = ({ latitude, longitude }, ApiKey) => {
   return fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${ApiKey}`
   ).then((res) => checkRequestResult(res));
 };
 
@@ -38,12 +38,3 @@ const getWeatherCondition = (temperature) => {
     return "cold";
   }
 };
-
-// const setTempByUnit = (temp) => {
-//   const currentTempUnit = useContext(CurrentTempUnitContext);
-//   if (currentTempUnit === "F") {
-//     return temp;
-//   } else {
-//     return ((temp - 32) * 5) / 9;
-//   }
-// };

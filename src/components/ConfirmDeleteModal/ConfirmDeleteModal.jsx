@@ -2,7 +2,6 @@ import "./ConfirmDeleteModal.css";
 import closeBtn from "../../assets/close-btn.svg";
 
 function ConfirmDeleteModal({ activeModal, closeModal, card, deleteCard }) {
-  ////console.log(closeBtn + "     " + deleteCard);
   return (
     <div className={`modal ${activeModal === "delete" ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_confirm-delete">

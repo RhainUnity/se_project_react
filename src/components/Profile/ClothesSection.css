@@ -1,12 +1,25 @@
+.profile__clothes-section {
+  display: flex;
+}
+
+.clothes-section__container {
+  width: 100%;
+  margin-left: auto;
+  padding-left: 36px;
+}
+
 .clothes-section__header {
   display: flex;
-  margin-left: auto;
+  align-items: center;
+  width: 100%;
 }
 
 .clothes-section__add-item_btn {
   border: none;
   color: rgba(0, 0, 0, 0.6);
   padding: 0 0 0 20px;
+  height: 24px;
+  margin: 16px 0;
 }
 
 .clothes-section__add-item_btn:hover {
@@ -17,8 +30,9 @@
 .clothes-section__cards_list {
   display: flex;
   flex-wrap: wrap;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
   gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: flex-start;
 }

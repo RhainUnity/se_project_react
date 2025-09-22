@@ -17,11 +17,10 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
     setCanSubmit(formRef.current?.checkValidity() ?? false);
   }, [values]);
 
-  function handlesubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!formRef.current?.checkValidity()) return;
     onAddItem(values);
-    closeModal();
     setValues({ name: "", weatherType: "", imageUrl: "" });
   }
 
@@ -30,7 +29,7 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
       title="New garment"
       name="new-card"
       closeModal={closeModal}
-      onSubmit={handlesubmit}
+      onSubmit={handleSubmit}
       buttonText={buttonText}
       isOpen={isOpen}
       formRef={formRef}

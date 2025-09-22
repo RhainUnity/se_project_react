@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3002";
+const baseUrl = "http://localhost:3001";
 
 function getItems() {
   return fetch(`${baseUrl}/items`).then((res) => {

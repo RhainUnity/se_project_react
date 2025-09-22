@@ -7,11 +7,7 @@ import Profile from "../Profile/Profile.jsx";
 import Footer from "../Footer/Footer.jsx";
 import AddItemModal from "../AddItemsModal/AddItemModal.jsx";
 import ItemModal from "../ItemModal/ItemModal";
-import {
-  coordinates,
-  APIkey,
-  /*defaultClothingItems THIS WILL CHANGE WHEN CALLINGTT API*/
-} from "../../utils/constants.js";
+import { coordinates, ApiKey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext.js";
 import { getItems, postItems, deleteItems } from "../../utils/api.js";
@@ -26,10 +22,10 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState("preview");
-  const [currentTempUnit, setCurrenTempUnit] = useState("F");
+  const [currentTempUnit, setCurrentTempUnit] = useState("F");
 
   const handleToggleSwitchChange = () => {
-    setCurrenTempUnit(currentTempUnit === "F" ? "C" : "F");
+    setCurrentTempUnit(currentTempUnit === "F" ? "C" : "F");
   };
 
   const handleCardClick = (card) => {
@@ -77,7 +73,7 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
+    getWeather(coordinates, ApiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
@@ -153,9 +149,7 @@ function App() {
           closeModal={closeModal}
           isOpen={activeModal === "add-garment"}
           onAddItem={handleAddItem}
-        >
-          {"///////"}
-        </AddItemModal>
+        ></AddItemModal>
         <ItemModal
           activeModal={activeModal}
           card={selectedCard}
