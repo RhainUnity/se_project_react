@@ -1,6 +1,5 @@
 import "./ItemModal.css";
 import closeBtn from "../../assets/close-btn.svg";
-import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
 function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
   if (activeModal !== "preview" || !card) return null;

@@ -17,12 +17,17 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
     setCanSubmit(formRef.current?.checkValidity() ?? false);
   }, [values]);
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formRef.current?.checkValidity()) return;
-    onAddItem(values);
-    setValues({ name: "", weatherType: "", imageUrl: "" });
-  }
+    try {
+      await onAddItem(values);
+      setValues(defaultValues);
+      closeModal();
+    } catch (err) {
+      console.error("Add item failed:", err);
+    }
+  };
 
   return (
     <ModalWithForm

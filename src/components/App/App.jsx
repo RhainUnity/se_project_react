@@ -7,7 +7,7 @@ import Profile from "../Profile/Profile.jsx";
 import Footer from "../Footer/Footer.jsx";
 import AddItemModal from "../AddItemsModal/AddItemModal.jsx";
 import ItemModal from "../ItemModal/ItemModal";
-import { coordinates, ApiKey } from "../../utils/constants.js";
+import { coordinates, apiKey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext.js";
 import { getItems, postItems, deleteItems } from "../../utils/api.js";
@@ -45,13 +45,9 @@ function App() {
       imageUrl: inputItems.imageUrl,
     };
 
-    try {
-      const saved = await postItems(newItem);
+    return postItems(newItem).then((saved) => {
       setClothingItems((prev) => [saved, ...prev]);
-      closeModal();
-    } catch (err) {
-      console.error("Failed to save item:", err);
-    }
+    });
   };
 
   const handleConfirmDelModal = () => {
@@ -73,7 +69,7 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, ApiKey)
+    getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
@@ -95,7 +91,7 @@ function App() {
 
   // ADD ESCAPE LISTENER
   useEffect(() => {
-    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
+    if (!activeModal) return;
 
     const handleEscClose = (e) => {
       if (e.key === "Escape") {

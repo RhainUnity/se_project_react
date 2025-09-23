@@ -13,8 +13,6 @@ function WeatherCard({ weatherData }) {
     );
   });
 
-  const weatherOptionUrl = filteredWeatherOption[0]?.url;
-
   const currentWeatherCard =
     filteredWeatherOption[0]?.url || defaultWeatherCardImg;
 
