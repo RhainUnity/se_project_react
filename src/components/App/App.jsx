@@ -12,6 +12,8 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext.js";
 import { getItems, postItems, deleteItems } from "../../utils/api.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -23,6 +25,8 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState("preview");
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
+  // /////////////////////////////////
+  // const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
   const handleToggleSwitchChange = () => {
     setCurrentTempUnit(currentTempUnit === "F" ? "C" : "F");
@@ -81,8 +85,8 @@ function App() {
 
   useEffect(() => {
     getItems()
-      .then((data) => {
-        setClothingItems(data);
+      .then(({ data }) => {
+        setClothingItems(data.reverse());
       })
       .catch((error) => {
         console.error("Failed to fetch item data:", error);
@@ -157,6 +161,16 @@ function App() {
           card={selectedCard}
           closeModal={closeModal}
           deleteCard={handleDeleteItem}
+        />
+        <RegisterModal
+          activeModal={activeModal}
+          closeModal={closeModal}
+          onRegister={() => {}}
+        />
+        <LoginModal
+          activeModal={activeModal}
+          closeModal={closeModal}
+          onLogin={() => {}}
         />
       </CurrentTempUnitContext.Provider>
     </div>
