@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
+import RequireAuth from "../RequireAuth/RequireAuth.jsx";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile.jsx";
 import Footer from "../Footer/Footer.jsx";
@@ -56,9 +57,16 @@ function App() {
       setAuthLoading(true);
       setAuthError("");
       await signup(form);
-      // after successful signup, open login
-      setActiveModal("");
-      setActiveModal("login");
+
+      // auto-login with the same creds
+      const data = await login({ email: form.email, password: form.password });
+      if (data?.token) {
+        setToken(data.token);
+        localStorage.setItem("jwt", data.token);
+        const me = await getCurrentUser(data.token);
+        setCurrentUser(me);
+      }
+      setActiveModal(""); // close modal
     } catch (err) {
       console.error("Signup failed:", err);
       setAuthError(err.message || "Signup failed");
@@ -220,12 +228,14 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  handleCardClick={handleCardClick}
-                  weatherData={weatherData}
-                  clothingItems={clothingItems}
-                  handleAddClick={handleAddClick}
-                />
+                <RequireAuth user={currentUser}>
+                  <Profile
+                    handleCardClick={handleCardClick}
+                    weatherData={weatherData}
+                    clothingItems={clothingItems}
+                    handleAddClick={handleAddClick}
+                  />
+                </RequireAuth>
               }
             />
           </Routes>
@@ -243,6 +253,7 @@ function App() {
           card={selectedCard}
           closeModal={closeModal}
           confirmDelete={handleConfirmDelModal}
+          user={currentUser}
         />
         <ConfirmDeleteModal
           activeModal={activeModal}
