@@ -1,3 +1,4 @@
+// ItemModal.jsx
 import "./ItemModal.css";
 import closeBtn from "../../assets/close-btn.svg";
 

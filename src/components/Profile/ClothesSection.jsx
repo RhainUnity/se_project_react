@@ -1,3 +1,4 @@
+// ClothesSection.jsx
 import ItemCard from "../ItemCard/ItemCard.jsx";
 import "./ClothesSection.css";
 
