@@ -50,6 +50,15 @@ function RegisterModal({
         required
       />
 
+      {/* REQUIRED AVATAR FIELD */}
+      <input
+        className="modal__input"
+        type="url"
+        name="avatar"
+        placeholder="Avatar URL"
+        required
+      />
+
       {error && <div className="modal__error">{error}</div>}
     </ModalWithForm>
   );

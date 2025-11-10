@@ -106,13 +106,12 @@ function App() {
 
   const handleAddItem = async (inputItems) => {
     const newItem = {
-      _id: Date.now().toString(),
       name: inputItems.name,
       weather: inputItems.weatherType,
       imageUrl: inputItems.imageUrl,
     };
 
-    return postItems(newItem).then((saved) => {
+    return postItems(newItem, token).then((saved) => {
       setClothingItems((prev) => [saved, ...prev]);
     });
   };
@@ -123,7 +122,7 @@ function App() {
 
   const handleDeleteItem = async (id) => {
     try {
-      await deleteItems(id);
+      await deleteItems(id, token);
       setClothingItems((prev) => prev.filter((item) => item._id !== id));
       closeModal();
     } catch (err) {
@@ -158,18 +157,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getItems()
-      .then(({ data }) => {
-        setClothingItems(data.reverse());
-      })
-      // // //  --- MAYBE??? ---
-      // // // getItems()
-      // // //   .then((data) => setClothingItems([...data].reverse()))
+    // // //  --- MAYBE??? ---
+    // getItems(token).then(({ data }) => {
+    //   setClothingItems(data.reverse());
+    // });
+    // // //  --- MAYBE??? ---
+    getItems(token)
+      .then((data) => setClothingItems([...data].reverse()))
 
       .catch((error) => {
         console.error("Failed to fetch item data:", error);
       });
-  }, []);
+  }, [token]); // reload items on token change
 
   // ADD ESCAPE LISTENER
   useEffect(() => {
@@ -201,6 +200,11 @@ function App() {
             onOpenLogin={openLogin}
             onOpenRegister={openRegister}
             user={currentUser}
+            onLogout={() => {
+              setToken("");
+              localStorage.removeItem("jwt");
+              setCurrentUser(null);
+            }}
           />
           <Routes>
             <Route
