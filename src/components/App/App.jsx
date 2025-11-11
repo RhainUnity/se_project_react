@@ -274,6 +274,7 @@ function App() {
           onLogin={handleLogin}
           loading={authLoading}
           error={authError}
+          onOpenRegister={openRegister}
         />
       </CurrentTempUnitContext.Provider>
     </div>

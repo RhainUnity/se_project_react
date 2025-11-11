@@ -2,7 +2,14 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./LoginModal.css";
 
-function LoginModal({ activeModal, closeModal, onLogin, loading, error }) {
+function LoginModal({
+  activeModal,
+  closeModal,
+  onLogin,
+  loading,
+  error,
+  onOpenRegister,
+}) {
   if (activeModal !== "login") return null;
 
   const handleSubmit = (e) => {
@@ -36,6 +43,13 @@ function LoginModal({ activeModal, closeModal, onLogin, loading, error }) {
         placeholder="Password"
         required
       />
+      <button
+        type="button"
+        className="modal__switch-btn"
+        onClick={onOpenRegister}
+      >
+        or Sign Up
+      </button>
 
       {error && <div className="modal__error">{error}</div>}
     </ModalWithForm>

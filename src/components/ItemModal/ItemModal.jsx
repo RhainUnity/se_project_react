@@ -4,6 +4,7 @@ import closeBtn from "../../assets/close-btn.svg";
 
 function ItemModal({ confirmDelete, activeModal, closeModal, card, user }) {
   if (activeModal !== "preview" || !card) return null;
+  const canDelete = user && String(card.owner) === String(user._id);
 
   return (
     <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
