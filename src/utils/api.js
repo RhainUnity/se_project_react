@@ -51,6 +51,18 @@ async function postItems(item, token) {
   return checkRequestResult(res);
 }
 
+async function updateUser(data, token) {
+  const res = await fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  return checkRequestResult(res);
+}
+
 async function deleteItems(id, token) {
   const res = await fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
@@ -60,6 +72,22 @@ async function deleteItems(id, token) {
     },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+}
+
+export async function addCardLike(id, token) {
+  const res = await fetch(`${baseUrl}/items/${id}/likes`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return checkRequestResult(res);
+}
+
+export async function removeCardLike(id, token) {
+  const res = await fetch(`${baseUrl}/items/${id}/likes`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return checkRequestResult(res);
 }
 
 function checkRequestResult(res) {
@@ -74,4 +102,5 @@ export {
   signup,
   login,
   getCurrentUser,
+  updateUser,
 };

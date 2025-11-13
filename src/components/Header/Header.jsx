@@ -2,17 +2,14 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
+// import avatar from "../../assets/avatar.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.jsx";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 
-function Header({
-  handleAddClick,
-  weatherData,
-  user,
-  onOpenRegister,
-  onOpenLogin,
-  onLogout,
-}) {
+function Header({ handleAddClick, weatherData, onOpenRegister, onOpenLogin }) {
+  const user = useContext(CurrentUserContext);
+  const firstLetter = user?.name?.[0]?.toUpperCase();
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -60,19 +57,19 @@ function Header({
             <p className="header__username">
               {user?.name || "Firstname Lastname"}
             </p>
-            <img
-              className="header__avatar"
-              src={user?.avatar || avatar}
-              alt="Profile"
-            />
+            {user?.avatar ? (
+              // User has an avatar URL - show normal <img>
+              <img className="header__avatar" src={user.avatar} alt="Profile" />
+            ) : (
+              //  No avatar - show first-letter placeholder
+              <div
+                className="header__avatar header__avatar--fallback"
+                aria-label="Profile"
+              >
+                {firstLetter || "?"}
+              </div>
+            )}
           </Link>
-          <button
-            type="button"
-            className="header__btn header__btn--ghost"
-            onClick={onLogout}
-          >
-            Log out
-          </button>
         </div>
       )}
     </header>

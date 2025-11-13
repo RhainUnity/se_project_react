@@ -28,3 +28,17 @@
   line-height: 20px;
   padding: 0 12px;
 }
+
+.card__like-btn {
+  width: 40px;
+  height: 40px;
+  background: url("../../assets/heart-outline.svg") no-repeat center;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.card__like-btn_liked {
+  background-image: url("../../assets/heart-filled.svg");
+}

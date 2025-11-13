@@ -6,9 +6,24 @@
 .sidebar__avatar {
   height: 56px;
   width: 56px;
+  border-radius: 50%;
 }
 
 .sidebar__username {
   padding-left: 16px;
   width: 200px;
+}
+
+.sidebar__avatar--fallback {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ccc;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 2rem;
+  text-transform: uppercase;
 }

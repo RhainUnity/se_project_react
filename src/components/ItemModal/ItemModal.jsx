@@ -1,10 +1,14 @@
 // ItemModal.jsx
 import "./ItemModal.css";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 import closeBtn from "../../assets/close-btn.svg";
 
-function ItemModal({ confirmDelete, activeModal, closeModal, card, user }) {
+function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
+  const currentUser = useContext(CurrentUserContext);
   if (activeModal !== "preview" || !card) return null;
-  const canDelete = user && String(card.owner) === String(user._id);
+  const canDelete =
+    card && currentUser && String(card.owner) === String(currentUser._id);
 
   return (
     <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
