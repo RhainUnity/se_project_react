@@ -8,34 +8,34 @@ export default function SideBar({ onOpenEditProfile, onLogout }) {
   const firstLetter = currentUser?.name?.[0]?.toUpperCase();
   return (
     <div className="sidebar">
-      {currentUser?.avatar ? (
-        <img
-          src={currentUser.avatar}
-          alt="Avatar"
-          className="sidebar__avatar"
-        />
-      ) : (
-        <div
-          className="sidebar__avatar sidebar__avatar--fallback"
-          aria-label="Avatar"
-        >
-          {firstLetter || "?"}
-        </div>
-      )}
+      <div className="sidebar__top">
+        {currentUser?.avatar ? (
+          <img
+            src={currentUser.avatar}
+            alt="Avatar"
+            className="sidebar__avatar"
+          />
+        ) : (
+          <div
+            className="sidebar__avatar sidebar__avatar--fallback"
+            aria-label="Avatar"
+          >
+            {firstLetter || "?"}
+          </div>
+        )}
 
-      <p className="sidebar__username">{currentUser?.name || "Unknown User"}</p>
+        <p className="sidebar__username">
+          {currentUser?.name || "Unknown User"}
+        </p>
+      </div>
       <button
         type="button"
-        className="sidebar__edit-btn"
+        className="sidebar__btn"
         onClick={onOpenEditProfile}
       >
-        Edit Profile
+        Change profile data
       </button>
-      <button
-        type="button"
-        className="header__btn header__btn--ghost"
-        onClick={onLogout}
-      >
+      <button type="button" className="sidebar__btn" onClick={onLogout}>
         Log out
       </button>
     </div>

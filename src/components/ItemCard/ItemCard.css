@@ -9,6 +9,13 @@
   justify-content: center;
 }
 
+.card__header {
+  display: flex;
+  position: absolute;
+  top: 15px;
+  margin: auto;
+}
+
 .card:hover {
   cursor: pointer;
 }
@@ -20,25 +27,25 @@
 }
 
 .card__name {
-  position: absolute;
-  top: 15px;
   margin: 0;
   background-color: white;
   font-size: 16px;
   line-height: 20px;
   padding: 0 12px;
+  border-radius: 4px;
 }
 
 .card__like-btn {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  align-items: center;
   background: url("../../assets/heart-outline.svg") no-repeat center;
   border: none;
   cursor: pointer;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+  margin-left: 10px;
 }
+
 .card__like-btn_liked {
   background-image: url("../../assets/heart-filled.svg");
 }

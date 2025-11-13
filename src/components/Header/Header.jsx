@@ -27,7 +27,7 @@ function Header({ handleAddClick, weatherData, onOpenRegister, onOpenLogin }) {
         {currentDate}
         {city ? `, ${city}` : ""}
       </p>
-      <ToggleSwitch />
+
       {/* Right-side actions */}
       {!user ? (
         // ---------- Logged OUT ----------
@@ -46,6 +46,7 @@ function Header({ handleAddClick, weatherData, onOpenRegister, onOpenLogin }) {
       ) : (
         // ---------- Logged In ----------
         <div className="header__actions">
+          <ToggleSwitch />
           <button
             onClick={handleAddClick}
             type="button"
