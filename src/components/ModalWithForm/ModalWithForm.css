@@ -128,3 +128,36 @@
 .modal__submit:disabled {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.modal__switch-btn {
+  letter-spacing: 0%;
+  background-color: transparent;
+  height: 36px;
+  width: 100 px;
+  border: none;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__switch-btn:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 1);
+}
+
+/* Neutralize Chrome/Edge autofill background */
+.modal__input:-webkit-autofill,
+.modal__input:-webkit-autofill:hover,
+.modal__input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important; /* match your modal bg */
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: #000;
+  caret-color: #000;
+}
+
+/* Newer spec pseudo-class */
+.modal__input:autofill,
+.modal__input:autofill:hover,
+.modal__input:autofill:focus {
+  box-shadow: 0 0 0 1000px #fff inset !important;
+  -webkit-text-fill-color: #000;
+}

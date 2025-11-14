@@ -1,6 +1,6 @@
 // LoginModal.jsx
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import "./LoginModal.css";
+import { useForm } from "../../hooks/useForm.js";
 
 function LoginModal({
   activeModal,
@@ -12,12 +12,33 @@ function LoginModal({
 }) {
   if (activeModal !== "login") return null;
 
+  const { values, handleChange, errors, isValid, resetForm } = useForm({
+    email: "",
+    password: "",
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const creds = Object.fromEntries(formData); // { email, password }
-    onLogin(creds);
+    onLogin(values);
+    resetForm();
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const creds = Object.fromEntries(formData); // { email, password }
+  //   onLogin(creds);
+  // };
+
+  const orSignUp = (
+    <button
+      type="button"
+      className="modal__switch-btn"
+      onClick={onOpenRegister}
+    >
+      or Sign Up
+    </button>
+  );
 
   return (
     <ModalWithForm
@@ -28,29 +49,34 @@ function LoginModal({
       name="login-form"
       buttonText={loading ? "Logging in..." : "Log In"}
       submitDisabled={loading}
+      orSignUp={orSignUp}
     >
-      <input
-        className="modal__input"
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-      />
-      <input
-        className="modal__input"
-        type="password"
-        name="password"
-        placeholder="Password"
-        required
-      />
-      <button
-        type="button"
-        className="modal__switch-btn"
-        onClick={onOpenRegister}
-      >
-        or Sign Up
-      </button>
-
+      <label htmlFor="email" className="modal__label">
+        Email
+        <input
+          className="modal__input"
+          type="email"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          // id="email"
+          placeholder="Email"
+          required
+        />
+      </label>
+      <label htmlFor="password" className="modal__label">
+        Password
+        <input
+          className="modal__input"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          // id="password"
+          placeholder="Password"
+          required
+        />
+      </label>
       {error && <div className="modal__error">{error}</div>}
     </ModalWithForm>
   );
