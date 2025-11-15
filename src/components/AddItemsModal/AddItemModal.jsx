@@ -12,22 +12,7 @@ const defaultValues = {
 const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
   const { values, handleChange, isValid, resetForm } = useForm(defaultValues);
   const formRef = useRef(null);
-  // const [canSubmit, setCanSubmit] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
-  // useEffect(() => {
-  //   if (!formRef.current) return;
-  //   setCanSubmit(formRef.current.checkValidity());
-  // }, [values]);
-
-  // useEffect(() => {
-  //   if (!isOpen) return;
-  //   setValues(defaultValues);
-  //   setSubmitting(false);
-  //   if (formRef.current) {
-  //     formRef.current.reset();
-  //   }
-  // }, [isOpen, setValues]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

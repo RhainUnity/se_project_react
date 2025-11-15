@@ -12,8 +12,6 @@ export default function EditProfileModal({
   loading,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  // const [name, setName] = useState("");
-  // const [avatar, setAvatar] = useState("");
   const { values, handleChange, errors, isValid, resetForm } = useForm({
     name: "",
     avatar: "",
@@ -32,18 +30,6 @@ export default function EditProfileModal({
     e.preventDefault();
     onSubmit(values); // { name, avatar }
   };
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setName(currentUser.name || "");
-  //     setAvatar(currentUser.avatar || "");
-  //   }
-  // }, [currentUser, isOpen]);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onSubmit({ name, avatar });
-  // };
 
   return (
     <ModalWithForm

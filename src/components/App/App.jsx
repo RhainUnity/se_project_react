@@ -73,7 +73,6 @@ function App() {
     } catch (err) {
       console.error("Signup failed:", err);
       setAuthError(err.message || "Signup failed");
-      // you can set an error state if you want to display it in the modal
     } finally {
       setAuthLoading(false);
     }

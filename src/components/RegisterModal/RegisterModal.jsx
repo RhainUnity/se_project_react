@@ -12,7 +12,6 @@ function RegisterModal({
 }) {
   if (activeModal !== "register") return null;
 
-  //  ****************************************
   const { values, handleChange, errors, isValid, resetForm } = useForm({
     name: "",
     email: "",
@@ -25,13 +24,6 @@ function RegisterModal({
     onRegister(values);
     resetForm();
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target);
-  //   const userData = Object.fromEntries(formData); // { name, email, password }
-  //   onRegister(userData);
-  // };
 
   return (
     <ModalWithForm
@@ -51,7 +43,7 @@ function RegisterModal({
           name="name"
           value={values.name}
           onChange={handleChange}
-          //id="name"
+          id="name"
           placeholder="Name"
           required
         />
@@ -64,7 +56,7 @@ function RegisterModal({
           name="email"
           value={values.email}
           onChange={handleChange}
-          //id="email"
+          id="email"
           placeholder="Email"
           required
         />
@@ -77,7 +69,7 @@ function RegisterModal({
           name="password"
           value={values.password}
           onChange={handleChange}
-          //id="password"
+          id="password"
           placeholder="Password"
           required
         />
@@ -90,7 +82,6 @@ function RegisterModal({
           name="avatar"
           value={values.avatar}
           onChange={handleChange}
-          //id="avatar"
           id="avatar"
           placeholder="Avatar URL"
           required

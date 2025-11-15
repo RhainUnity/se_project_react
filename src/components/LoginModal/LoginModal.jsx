@@ -23,13 +23,6 @@ function LoginModal({
     resetForm();
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target);
-  //   const creds = Object.fromEntries(formData); // { email, password }
-  //   onLogin(creds);
-  // };
-
   const orSignUp = (
     <button
       type="button"
@@ -59,7 +52,6 @@ function LoginModal({
           name="email"
           value={values.email}
           onChange={handleChange}
-          // id="email"
           placeholder="Email"
           required
         />
@@ -72,7 +64,6 @@ function LoginModal({
           name="password"
           value={values.password}
           onChange={handleChange}
-          // id="password"
           placeholder="Password"
           required
         />
