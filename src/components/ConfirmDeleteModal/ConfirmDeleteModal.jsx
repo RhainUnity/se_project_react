@@ -1,3 +1,4 @@
+// ConfirmDeleteModal.jsx
 import "./ConfirmDeleteModal.css";
 import closeBtn from "../../assets/close-btn.svg";
 

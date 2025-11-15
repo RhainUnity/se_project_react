@@ -1,3 +1,4 @@
+// weatherApi.js
 import { checkRequestResult } from "./api";
 
 export const getWeather = ({ latitude, longitude }, apiKey) => {

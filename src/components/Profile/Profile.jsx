@@ -7,11 +7,14 @@ export default function Profile({
   weatherData,
   clothingItems = [],
   handleAddClick,
+  onOpenEditProfile,
+  onCardLike,
+  onLogout,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar onOpenEditProfile={onOpenEditProfile} onLogout={onLogout} />
       </section>
       <section className="profile__clothes-section">
         <ClothesSection
@@ -19,6 +22,7 @@ export default function Profile({
           weatherData={weatherData}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

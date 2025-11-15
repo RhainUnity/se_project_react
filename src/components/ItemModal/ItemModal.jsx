@@ -1,8 +1,14 @@
+// ItemModal.jsx
 import "./ItemModal.css";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 import closeBtn from "../../assets/close-btn.svg";
 
 function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
+  const currentUser = useContext(CurrentUserContext);
   if (activeModal !== "preview" || !card) return null;
+  const canDelete =
+    card && currentUser && String(card.owner) === String(currentUser._id);
 
   return (
     <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
@@ -15,13 +21,15 @@ function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
           <h2 className="modal__caption">{card.name}</h2>
           <p className="modal__weather">Weather: {card.weather}</p>
         </div>
-        <button
-          type="button"
-          className="modal__delete-btn"
-          onClick={confirmDelete}
-        >
-          Delete item
-        </button>
+        {canDelete && (
+          <button
+            type="button"
+            className="modal__delete-btn"
+            onClick={confirmDelete}
+          >
+            Delete item
+          </button>
+        )}
       </div>
     </div>
   );

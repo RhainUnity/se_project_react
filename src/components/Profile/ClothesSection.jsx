@@ -1,11 +1,21 @@
+// ClothesSection.jsx
 import ItemCard from "../ItemCard/ItemCard.jsx";
 import "./ClothesSection.css";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 
 export default function ClothesSection({
   handleCardClick,
   clothingItems = [],
   handleAddClick,
+  onCardLike,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+  const myItems = currentUser
+    ? clothingItems.filter(
+        (item) => String(item.owner) === String(currentUser._id)
+      )
+    : [];
   return (
     <section className="profile__clothes-section">
       <div className="clothes-section__container">
@@ -21,12 +31,13 @@ export default function ClothesSection({
         </div>
 
         <ul className="clothes-section__cards_list">
-          {clothingItems.map((item) => {
+          {myItems.map((item) => {
             return (
               <ItemCard
                 key={item._id}
                 item={item}
                 onCardClick={handleCardClick}
+                onCardLike={onCardLike}
               />
             );
           })}

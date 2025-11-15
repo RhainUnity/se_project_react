@@ -1,3 +1,4 @@
+// ModalWithForm.jsx
 import "./ModalWithForm.css";
 import closeBtn from "../../assets/close-btn.svg";
 
@@ -11,6 +12,7 @@ function ModalWithForm({
   name,
   formRef,
   submitDisabled,
+  orSignUp,
 }) {
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
@@ -26,13 +28,16 @@ function ModalWithForm({
           ref={formRef}
         >
           {children}
-          <button
-            type="submit"
-            className="modal__submit"
-            disabled={submitDisabled}
-          >
-            {buttonText}
-          </button>
+          <div className="modal__form-btns">
+            <button
+              type="submit"
+              className="modal__submit"
+              disabled={submitDisabled}
+            >
+              {buttonText}
+            </button>
+            {orSignUp}
+          </div>
         </form>
       </div>
     </div>
