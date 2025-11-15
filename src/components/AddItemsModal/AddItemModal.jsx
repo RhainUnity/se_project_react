@@ -1,32 +1,48 @@
 // AddItemModal.jsx
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import { useForm } from "../../hooks/useForm.js";
 
+const defaultValues = {
+  name: "",
+  weatherType: "",
+  imageUrl: "",
+};
+
 const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
-  const defaultValues = {
-    name: "",
-    weatherType: "",
-    imageUrl: "",
-  };
-  const { values, handleChange, setValues } = useForm(defaultValues);
-
+  const { values, handleChange, isValid, resetForm } = useForm(defaultValues);
   const formRef = useRef(null);
-  const [canSubmit, setCanSubmit] = useState(false);
+  // const [canSubmit, setCanSubmit] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    setCanSubmit(formRef.current?.checkValidity() ?? false);
-  }, [values]);
+  // useEffect(() => {
+  //   if (!formRef.current) return;
+  //   setCanSubmit(formRef.current.checkValidity());
+  // }, [values]);
+
+  // useEffect(() => {
+  //   if (!isOpen) return;
+  //   setValues(defaultValues);
+  //   setSubmitting(false);
+  //   if (formRef.current) {
+  //     formRef.current.reset();
+  //   }
+  // }, [isOpen, setValues]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formRef.current?.checkValidity()) return;
+
+    if (!formRef.current?.checkValidity() || submitting) return;
+
     try {
+      setSubmitting(true);
       await onAddItem(values);
-      setValues(defaultValues);
+      resetForm(defaultValues, {}, false);
       closeModal();
     } catch (err) {
       console.error("Add item failed:", err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -39,7 +55,7 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
       buttonText={buttonText}
       isOpen={isOpen}
       formRef={formRef}
-      submitDisabled={!canSubmit}
+      submitDisabled={!isValid || submitting}
     >
       <label htmlFor="name" className="modal__label">
         Name{" "}
@@ -49,7 +65,7 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
           className="modal__input"
           id="name"
           placeholder="Name"
-          value={values.name}
+          value={values.name || ""}
           onChange={handleChange}
           required
         />
@@ -62,7 +78,7 @@ const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
           className="modal__input"
           id="imageUrl"
           placeholder="Image URL"
-          value={values.imageUrl}
+          value={values.imageUrl || ""}
           onChange={handleChange}
           required
         />
