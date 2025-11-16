@@ -58,7 +58,7 @@
   color: #000000;
   border: none;
   padding: 8px 16px;
-  background-color: none;
+  background-color: transparent;
 }
 
 .header__btn:hover {

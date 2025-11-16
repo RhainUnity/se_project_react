@@ -32,6 +32,7 @@ function Header({ handleAddClick, weatherData, onOpenRegister, onOpenLogin }) {
       {!user ? (
         // ---------- Logged OUT ----------
         <div className="header__actions">
+          <ToggleSwitch />
           <button
             type="button"
             className="header__btn"
