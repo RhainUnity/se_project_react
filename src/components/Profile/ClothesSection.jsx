@@ -12,9 +12,10 @@ export default function ClothesSection({
 }) {
   const currentUser = useContext(CurrentUserContext);
   const myItems = currentUser
-    ? clothingItems.filter(
-        (item) => String(item.owner) === String(currentUser._id)
-      )
+    ? clothingItems.filter((item) => {
+        const ownerId = item.owner?._id || item.owner;
+        return String(ownerId) === String(currentUser._id);
+      })
     : [];
   return (
     <section className="profile__clothes-section">

@@ -40,14 +40,14 @@ export default function EditProfileModal({
       buttonText={loading ? "Saving..." : "Save"}
       submitDisabled={loading || !isValid}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="editProfile-Name" className="modal__label">
         Name
         <input
           className="modal__input"
           type="text"
           name="name"
           placeholder="Name"
-          id="name"
+          id="editProfile-Name"
           value={values.name || ""}
           onChange={handleChange}
           required

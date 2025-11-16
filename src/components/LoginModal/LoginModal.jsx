@@ -12,7 +12,7 @@ function LoginModal({
 }) {
   if (activeModal !== "login") return null;
 
-  const { values, handleChange, errors, isValid, resetForm } = useForm({
+  const { values, handleChange, resetForm } = useForm({
     email: "",
     password: "",
   });
@@ -50,6 +50,7 @@ function LoginModal({
           className="modal__input"
           type="email"
           name="email"
+          id="email"
           value={values.email}
           onChange={handleChange}
           placeholder="Email"
@@ -62,6 +63,7 @@ function LoginModal({
           className="modal__input"
           type="password"
           name="password"
+          id="password"
           value={values.password}
           onChange={handleChange}
           placeholder="Password"
