@@ -8,7 +8,7 @@
 
 .modal__image {
   width: 100%;
-  height: 70vh;
+  height: 75vh;
   object-fit: cover;
   display: block;
   border-radius: 16px 16px 0 0;
@@ -16,31 +16,41 @@
   padding: 0;
 }
 
+.modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px 0;
+  background-color: #ffffff;
+}
+
+.modal__info {
+  display: flex;
+  flex-direction: column;
+}
+
 .modal__caption {
   font-size: 20px;
   line-height: 24px;
-  margin: 0;
-  padding: 20px 0 12px 32px;
+  margin: 0 0 12px 0;
+  padding: 0;
 }
 
 .modal__weather {
   font-size: 20px;
   line-height: 24px;
   margin: 0;
-  padding: 0 0 32px 32px;
+  padding: 0;
 }
 
 .modal__delete-btn {
   font-size: 20px;
   line-height: 24px;
-  margin: 0;
   padding: 0;
-  position: absolute;
-  right: 32px;
-  bottom: 64px;
   border: none;
   background: none;
   color: rgba(255, 77, 0, 1);
+  align-self: flex-start;
 }
 
 .modal__delete-btn:hover {

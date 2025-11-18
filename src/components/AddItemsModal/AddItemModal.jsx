@@ -1,7 +1,7 @@
 // AddItemModal.jsx
 import { useRef, useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormAndValidation } from "../../hooks/useForm.js";
 
 const defaultValues = {
   name: "",
@@ -10,7 +10,7 @@ const defaultValues = {
 };
 
 const AddItemModal = ({ isOpen, onAddItem, closeModal, buttonText }) => {
-  const { values, handleChange, isValid, resetForm } = useForm(defaultValues);
+  const { values, handleChange, isValid, resetForm } = useFormAndValidation();
   const formRef = useRef(null);
   const [submitting, setSubmitting] = useState(false);
 
