@@ -3,6 +3,7 @@ import "./ItemModal.css";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 import { Modal } from "../Modal/Modal.jsx";
+import closeBtn from "../../assets/close-btn.svg";
 
 function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
   const currentUser = useContext(CurrentUserContext);
@@ -16,6 +17,9 @@ function ItemModal({ confirmDelete, activeModal, closeModal, card }) {
   return (
     <Modal name="preview" isOpen={isOpen} onClose={closeModal}>
       <div className="modal__content modal__content_type_image">
+        <button className="modal__close-btn" type="button" onClick={closeModal}>
+          <img src={closeBtn} alt="Close" className="modal__close-btn-image" />
+        </button>
         <img className="modal__image" src={card.imageUrl} alt={card.name} />
         <div className="modal__footer">
           <div className="modal__info">

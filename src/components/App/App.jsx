@@ -16,13 +16,11 @@ import {
   getItems,
   postItems,
   deleteItems,
-  signup,
-  login,
-  getCurrentUser,
   updateUser,
   addCardLike,
   removeCardLike,
 } from "../../utils/api.js";
+import { login, signup, getCurrentUser } from "../../utils/auth.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
@@ -297,6 +295,7 @@ function App() {
             onRegister={handleRegister}
             loading={isLoading}
             error={authError}
+            onOpenLogin={openLogin}
           />
           <LoginModal
             activeModal={activeModal}

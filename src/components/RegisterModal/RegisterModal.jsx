@@ -1,4 +1,5 @@
 // RegisterModal.jsx
+import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormAndValidation } from "../../hooks/useForm.js";
 import "./RegisterModal.css";
@@ -9,27 +10,42 @@ function RegisterModal({
   onRegister,
   loading,
   error,
+  onOpenLogin,
 }) {
-  if (activeModal !== "register") return null;
-
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation();
+
+  const isOpen = activeModal === "register";
+
+  useEffect(() => {
+    if (isOpen) {
+      resetForm();
+    }
+  }, [isOpen, resetForm]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onRegister(values);
-    resetForm();
   };
+
+  const orButton = (
+    <button type="button" className="modal__switch-btn" onClick={onOpenLogin}>
+      Or Login
+    </button>
+  );
 
   return (
     <ModalWithForm
       title="Register"
-      isOpen={activeModal === "register"}
+      isOpen={isOpen}
       closeModal={closeModal}
       onSubmit={handleSubmit}
       name="register-form"
       buttonText={loading ? "Creating..." : "Register"}
       submitDisabled={!isValid || loading}
+      orButton={orButton}
     >
       <label htmlFor="register-name" className="modal__label">
         Name
@@ -37,7 +53,7 @@ function RegisterModal({
           className="modal__input"
           type="text"
           name="name"
-          value={values.name}
+          value={values.name || ""}
           onChange={handleChange}
           id="register-name"
           placeholder="Name"
@@ -50,7 +66,7 @@ function RegisterModal({
           className="modal__input"
           type="email"
           name="email"
-          value={values.email}
+          value={values.email || ""}
           onChange={handleChange}
           id="register-email"
           placeholder="Email"
@@ -63,7 +79,7 @@ function RegisterModal({
           className="modal__input"
           type="password"
           name="password"
-          value={values.password}
+          value={values.password || ""}
           onChange={handleChange}
           id="register-password"
           placeholder="Password"
@@ -76,7 +92,7 @@ function RegisterModal({
           className="modal__input"
           type="url"
           name="avatar"
-          value={values.avatar}
+          value={values.avatar || ""}
           onChange={handleChange}
           id="register-avatar"
           placeholder="Avatar URL"
