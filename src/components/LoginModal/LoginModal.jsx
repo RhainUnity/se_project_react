@@ -1,6 +1,7 @@
 // LoginModal.jsx
+import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormAndValidation } from "../../hooks/useForm.js";
 
 function LoginModal({
   activeModal,
@@ -10,20 +11,22 @@ function LoginModal({
   error,
   onOpenRegister,
 }) {
-  if (activeModal !== "login") return null;
+  const { values, handleChange, resetForm, isValid } = useFormAndValidation();
 
-  const { values, handleChange, resetForm } = useForm({
-    email: "",
-    password: "",
-  });
+  const isOpen = activeModal === "login";
+
+  useEffect(() => {
+    if (isOpen) resetForm();
+  }, [isOpen, resetForm]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin(values);
-    resetForm();
   };
 
-  const orSignUp = (
+  const orButton = (
     <button
       type="button"
       className="modal__switch-btn"
@@ -36,35 +39,35 @@ function LoginModal({
   return (
     <ModalWithForm
       title="Log In"
-      isOpen={activeModal === "login"}
+      isOpen={isOpen}
       closeModal={closeModal}
       onSubmit={handleSubmit}
       name="login-form"
       buttonText={loading ? "Logging in..." : "Log In"}
-      submitDisabled={loading}
-      orSignUp={orSignUp}
+      submitDisabled={loading || !isValid}
+      orButton={orButton}
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="login-email" className="modal__label">
         Email
         <input
           className="modal__input"
           type="email"
           name="email"
-          id="email"
-          value={values.email}
+          id="login-email"
+          value={values.email || ""}
           onChange={handleChange}
           placeholder="Email"
           required
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="login-password" className="modal__label">
         Password
         <input
           className="modal__input"
           type="password"
           name="password"
-          id="password"
-          value={values.password}
+          id="login-password"
+          value={values.password || ""}
           onChange={handleChange}
           placeholder="Password"
           required

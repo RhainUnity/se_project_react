@@ -2,9 +2,22 @@
 import "./ConfirmDeleteModal.css";
 import closeBtn from "../../assets/close-btn.svg";
 
-function ConfirmDeleteModal({ activeModal, closeModal, card, deleteCard }) {
+function ConfirmDeleteModal({
+  activeModal,
+  closeModal,
+  card,
+  deleteCard,
+  isDeleting,
+}) {
+  const isOpen = activeModal === "delete";
+  if (!isOpen || !card) return null;
+
+  const handleDeleteClick = () => {
+    if (isDeleting) return; // guard just in case
+    deleteCard(card._id);
+  };
   return (
-    <div className={`modal ${activeModal === "delete" ? "modal_opened" : ""}`}>
+    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content modal__content_type_confirm-delete">
         <button className="modal__close-btn" type="button" onClick={closeModal}>
           <img src={closeBtn} alt="CLOSE" className="modal__close-btn-image" />
@@ -16,14 +29,20 @@ function ConfirmDeleteModal({ activeModal, closeModal, card, deleteCard }) {
         <button
           type="button"
           className="modal__final-delete-btn"
-          onClick={() => deleteCard(card._id)}
+          onClick={handleDeleteClick}
+          disabled={isDeleting}
         >
-          Yes, delete item
+          {isDeleting ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           type="button"
-          className="modal__cancel-btn"
+          className={
+            isDeleting
+              ? "modal__cancel-btn modal__cancel-btn_disabled"
+              : "modal__cancel-btn"
+          }
           onClick={closeModal}
+          disabled={isDeleting}
         >
           Cancel
         </button>

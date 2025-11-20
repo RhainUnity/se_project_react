@@ -16,13 +16,11 @@ import {
   getItems,
   postItems,
   deleteItems,
-  signup,
-  login,
-  getCurrentUser,
   updateUser,
   addCardLike,
   removeCardLike,
 } from "../../utils/api.js";
+import { login, signup, getCurrentUser } from "../../utils/auth.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
@@ -30,9 +28,7 @@ import EditProfileModal from "../Profile/EditProfileModal.jsx";
 import { CurrentUserContext } from "../../contexts/currentUserContext.js";
 
 function App() {
-  // --- DEBUG ---
-  console.log("API:", import.meta.env.VITE_API_BASE_URL);
-
+  // app state
   const [weatherData, setWeatherData] = useState({
     type: "hot",
     temperature: { F: 999, C: 777 },
@@ -45,111 +41,135 @@ function App() {
   // auth state
   const [token, setToken] = useState(localStorage.getItem("jwt") || "");
   const [currentUser, setCurrentUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // modal open/close
   const openLogin = () => setActiveModal("login");
   const openRegister = () => setActiveModal("register");
   const closeModal = () => setActiveModal("");
 
-  const handleRegister = async (form) => {
+  const handleSubmit = async (request, onSuccess = closeModal) => {
     try {
-      // form = { name, email, password }
-      setAuthLoading(true);
+      setIsLoading(true);
       setAuthError("");
+      await request();
+      if (onSuccess) onSuccess();
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setAuthError(err.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Register(Signup) Handler //
+  const handleRegister = (form) => {
+    const makeRequest = async () => {
+      // signup
       await signup(form);
 
-      // auto-login with the same creds
-      const data = await login({ email: form.email, password: form.password });
+      // auto-login
+      const creds = { email: form.email, password: form.password };
+      const data = await login(creds);
+
       if (data?.token) {
         setToken(data.token);
         localStorage.setItem("jwt", data.token);
         const me = await getCurrentUser(data.token);
         setCurrentUser(me);
       }
-      setActiveModal(""); // close modal
-    } catch (err) {
-      console.error("Signup failed:", err);
-      setAuthError(err.message || "Signup failed");
-    } finally {
-      setAuthLoading(false);
-    }
+    };
+
+    handleSubmit(makeRequest);
   };
 
-  const handleLogin = async (creds) => {
-    // creds = { email, password }
-    try {
-      setAuthLoading(true);
-      setAuthError("");
+  // Login Handler //
+  const handleLogin = (creds) => {
+    const makeRequest = async () => {
+      // creds = { email, password }
       const data = await login(creds); // expect { token }
-      if (data?.token) {
-        setToken(data.token);
-        localStorage.setItem("jwt", data.token);
+
+      if (!data?.token) {
+        throw new Error("No token received from server");
       }
-      setActiveModal("");
+
+      setToken(data.token);
+      localStorage.setItem("jwt", data.token);
+
       // load the user right after login
       const me = await getCurrentUser(data.token);
       setCurrentUser(me);
-    } catch (err) {
-      console.error("Login failed:", err);
-      setAuthError(err.message || "Login failed");
-    } finally {
-      setAuthLoading(false);
-    }
+    };
+
+    handleSubmit(makeRequest);
   };
 
+  // Temp Unit Toggle Handler //
   const handleToggleSwitchChange = () => {
     setCurrentTempUnit(currentTempUnit === "F" ? "C" : "F");
   };
 
+  // Card Click Handler //
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview");
   };
 
+  // Authorized User Add Item Modal Handler //
   const handleAddClick = () => {
     if (!currentUser) return setActiveModal("login");
     setActiveModal("add-garment");
   };
 
-  const handleAddItem = async (inputItems) => {
-    const newItem = {
-      name: inputItems.name,
-      weather: inputItems.weatherType,
-      imageUrl: inputItems.imageUrl,
+  // Add Item Handler //
+  const handleAddItem = (inputItems) => {
+    const makeRequest = async () => {
+      const newItem = {
+        name: inputItems.name,
+        weather: inputItems.weatherType,
+        imageUrl: inputItems.imageUrl,
+      };
+
+      const saved = await postItems(newItem, token);
+      setClothingItems((prev) => [saved, ...prev]);
     };
 
-    return postItems(newItem, token).then((saved) => {
-      setClothingItems((prev) => [saved, ...prev]);
-    });
+    handleSubmit(makeRequest);
   };
 
+  // Delete Item Handlers //
   const handleConfirmDelModal = () => {
     setActiveModal("delete");
   };
 
+  // Delete Item Handlers //
   const handleDeleteItem = async (id) => {
     try {
+      setIsDeleting(true);
       await deleteItems(id, token);
       setClothingItems((prev) => prev.filter((item) => item._id !== id));
       closeModal();
     } catch (err) {
       console.error("Failed to delete item:", err);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
-  const handleEditProfile = async (data) => {
-    try {
-      const updated = await updateUser(data, token);
-      setCurrentUser(updated);
-      setIsEditProfileOpen(false);
-    } catch (err) {
-      console.error("Failed to update profile:", err);
-    }
+  // Edit Profile Handler //
+  const handleEditProfile = (inputValues) => {
+    const makeRequest = async () => {
+      const updatedUser = await updateUser(inputValues, token);
+      setCurrentUser(updatedUser);
+    };
+
+    handleSubmit(makeRequest, () => setIsEditProfileOpen(false));
   };
 
+  // Like/Unlike Handlers //
   const handleCardLike = async (item) => {
     const token = localStorage.getItem("jwt");
     if (!token) return;
@@ -204,23 +224,7 @@ function App() {
       });
   }, [token]); // reload items on token change
 
-  // ADD ESCAPE LISTENER
-  useEffect(() => {
-    if (!activeModal) return;
-
-    const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscClose);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]); // watch activeModal here
-  // end of Escape Listener
+  // // ADD ESCAPE LISTENER
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -250,7 +254,7 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <RequireAuth user={currentUser}>
+                  <RequireAuth>
                     <Profile
                       handleCardClick={handleCardClick}
                       weatherData={weatherData}
@@ -282,26 +286,27 @@ function App() {
             card={selectedCard}
             closeModal={closeModal}
             confirmDelete={handleConfirmDelModal}
-            user={currentUser}
           />
           <ConfirmDeleteModal
             activeModal={activeModal}
             card={selectedCard}
             closeModal={closeModal}
             deleteCard={handleDeleteItem}
+            isDeleting={isDeleting}
           />
           <RegisterModal
             activeModal={activeModal}
             closeModal={closeModal}
             onRegister={handleRegister}
-            loading={authLoading}
+            loading={isLoading}
             error={authError}
+            onOpenLogin={openLogin}
           />
           <LoginModal
             activeModal={activeModal}
             closeModal={closeModal}
             onLogin={handleLogin}
-            loading={authLoading}
+            loading={isLoading}
             error={authError}
             onOpenRegister={openRegister}
           />
@@ -309,6 +314,7 @@ function App() {
             isOpen={isEditProfileOpen}
             onClose={() => setIsEditProfileOpen(false)}
             onSubmit={handleEditProfile}
+            loading={isLoading}
           />
         </CurrentTempUnitContext.Provider>
       </div>
@@ -317,3 +323,20 @@ function App() {
 }
 
 export default App;
+
+// useEffect(() => {
+//   if (!activeModal) return;
+
+//   const handleEscClose = (e) => {
+//     if (e.key === "Escape") {
+//       closeModal();
+//     }
+//   };
+
+//   document.addEventListener("keydown", handleEscClose);
+
+//   return () => {
+//     document.removeEventListener("keydown", handleEscClose);
+//   };
+// }, [activeModal]); // watch activeModal here
+// // end of Escape Listener
