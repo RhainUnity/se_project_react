@@ -44,6 +44,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // modal open/close
   const openLogin = () => setActiveModal("login");
@@ -147,11 +148,14 @@ function App() {
   // Delete Item Handlers //
   const handleDeleteItem = async (id) => {
     try {
+      setIsDeleting(true);
       await deleteItems(id, token);
       setClothingItems((prev) => prev.filter((item) => item._id !== id));
       closeModal();
     } catch (err) {
       console.error("Failed to delete item:", err);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -288,6 +292,7 @@ function App() {
             card={selectedCard}
             closeModal={closeModal}
             deleteCard={handleDeleteItem}
+            isDeleting={isDeleting}
           />
           <RegisterModal
             activeModal={activeModal}

@@ -28,3 +28,8 @@
 .modal__cancel-btn:hover {
   cursor: pointer;
 }
+
+.modal__cancel-btn_disabled {
+  color: rgba(255, 77, 0, 0.5);
+  cursor: not-allowed;
+}
