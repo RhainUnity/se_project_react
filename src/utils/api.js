@@ -1,5 +1,21 @@
 // api.js
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+//  //////  OLD  -->> const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+
+//  //////  instructed by TT
+  // const baseUrl = process.env.NODE_ENV === "production" 
+  // ? "https://jrsTTWTWR2025.twilightparadox.com"
+  // : "http://localhost:3001";
+
+// my update because of Vite
+// api.js
+
+const isProduction = import.meta.env.MODE === "production";
+
+const baseUrl = isProduction
+  ? "https://api.jrsTTWTWR2025.twilightparadox.com"
+  : "http://localhost:3001";
+
+
 
 function checkRequestResult(res) {
   return res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`));
@@ -9,35 +25,6 @@ function checkRequestResult(res) {
 export function request(path, options = {}) {
   return fetch(`${baseUrl}${path}`, options).then(checkRequestResult);
 }
-
-// // --- User Authentication ---
-// async function signup({ name, email, password, avatar }) {
-//   const res = await fetch(`${baseUrl}/signup`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ name, email, password, avatar }),
-//   });
-//   return checkRequestResult(res);
-// }
-
-// async function login({ email, password }) {
-//   const res = await fetch(`${baseUrl}/signin`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ email, password }),
-//   });
-//   return checkRequestResult(res);
-// }
-
-// async function getCurrentUser(token) {
-//   const res = await fetch(`${baseUrl}/users/me`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-//   return checkRequestResult(res);
-// }
 
 // --- Clothing Items ---
 async function getItems(token) {
