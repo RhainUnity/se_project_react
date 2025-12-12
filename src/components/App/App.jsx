@@ -216,6 +216,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!token) return;
     getItems(token)
       .then((data) => setClothingItems([...data].reverse()))
 
