@@ -216,7 +216,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!token) return;
+    //  ////////////if (!token) return;
     getItems(token)
       .then((data) => setClothingItems([...data].reverse()))
 
@@ -324,20 +324,3 @@ function App() {
 }
 
 export default App;
-
-// useEffect(() => {
-//   if (!activeModal) return;
-
-//   const handleEscClose = (e) => {
-//     if (e.key === "Escape") {
-//       closeModal();
-//     }
-//   };
-
-//   document.addEventListener("keydown", handleEscClose);
-
-//   return () => {
-//     document.removeEventListener("keydown", handleEscClose);
-//   };
-// }, [activeModal]); // watch activeModal here
-// // end of Escape Listener
