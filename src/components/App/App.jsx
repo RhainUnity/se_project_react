@@ -46,6 +46,13 @@ function App() {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const fetchItems = () =>
+    getItems()
+      .then((data) => setClothingItems([...data].reverse()))
+      .catch((error) =>
+        console.error("Failed to fetch item data:", error)
+      );
+
   // modal open/close
   const openLogin = () => setActiveModal("login");
   const openRegister = () => setActiveModal("register");
@@ -80,6 +87,7 @@ function App() {
         localStorage.setItem("jwt", data.token);
         const me = await getCurrentUser(data.token);
         setCurrentUser(me);
+        await fetchItems();
       }
     };
 
@@ -102,6 +110,7 @@ function App() {
       // load the user right after login
       const me = await getCurrentUser(data.token);
       setCurrentUser(me);
+      await fetchItems();
     };
 
     handleSubmit(makeRequest);
@@ -174,7 +183,7 @@ function App() {
     const token = localStorage.getItem("jwt");
     if (!token) return;
 
-    const isLiked = item.likes.some((id) => id === currentUser?._id);
+    const isLiked = item.likes?.some((id) => id === currentUser?._id);
 
     try {
       const updatedCard = isLiked
@@ -216,13 +225,14 @@ function App() {
   }, []);
 
   useEffect(() => {
+    fetchItems();
     //  ////////////if (!token) return;
-    getItems()
-      .then((data) => setClothingItems([...data].reverse()))
-      .catch((error) => {
-        console.error("Failed to fetch item data:", error);
-      });
-  }, []); // reload items on token change
+    // getItems()
+    //   .then((data) => setClothingItems([...data].reverse()))
+    //   .catch((error) => {
+    //     console.error("Failed to fetch item data:", error);
+    //   });
+  }, []); // load items on initial app mount
 
   // // ADD ESCAPE LISTENER
 
