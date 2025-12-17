@@ -217,13 +217,12 @@ function App() {
 
   useEffect(() => {
     //  ////////////if (!token) return;
-    getItems(token)
+    getItems()
       .then((data) => setClothingItems([...data].reverse()))
-
       .catch((error) => {
         console.error("Failed to fetch item data:", error);
       });
-  }, [token]); // reload items on token change
+  }, []); // reload items on token change
 
   // // ADD ESCAPE LISTENER
 
