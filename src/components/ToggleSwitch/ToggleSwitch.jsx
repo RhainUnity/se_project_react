@@ -3,7 +3,7 @@ import "./ToggleSwitch.css";
 import { CurrentTempUnitContext } from "../../contexts/CurrentTempUnitContext";
 
 export default function ToggleSwitch() {
-  const { currentTempUnit, handleToggleSwitchChange } = useContext(
+  const { handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );
 

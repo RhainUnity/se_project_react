@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import "./Modal.css";
 
 export const Modal = ({ name, isOpen, onClose, children }) => {
-  if (!isOpen) return;
-
   // Escape key handler – only active when modal is open
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleEscape = (e) => {
       if (e.key === "Escape") {
         onClose();
@@ -18,6 +18,8 @@ export const Modal = ({ name, isOpen, onClose, children }) => {
       document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   // Overlay click handler
   const handleOverlay = (e) => {
